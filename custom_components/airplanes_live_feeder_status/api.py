@@ -1,4 +1,4 @@
-"""Sample API Client."""
+"""Airplanes.live Feeder Status API Client."""
 
 from __future__ import annotations
 
@@ -8,61 +8,34 @@ from typing import Any
 import aiohttp
 import async_timeout
 
+from .const import URL_FEED_STATUS
 
-class IntegrationBlueprintApiClientError(Exception):
+
+class AirplanesLiveApiClientError(Exception):
     """Exception to indicate a general API error."""
 
 
-class IntegrationBlueprintApiClientCommunicationError(
-    IntegrationBlueprintApiClientError,
+class AirplanesLiveApiClientCommunicationError(
+    AirplanesLiveApiClientError,
 ):
     """Exception to indicate a communication error."""
 
 
-class IntegrationBlueprintApiClientAuthenticationError(
-    IntegrationBlueprintApiClientError,
-):
-    """Exception to indicate an authentication error."""
-
-
-def _verify_response_or_raise(response: aiohttp.ClientResponse) -> None:
-    """Verify that the response is valid."""
-    if response.status in (401, 403):
-        msg = "Invalid credentials"
-        raise IntegrationBlueprintApiClientAuthenticationError(
-            msg,
-        )
-    response.raise_for_status()
-
-
-class IntegrationBlueprintApiClient:
-    """Sample API Client."""
+class AirplanesLiveApiClient:
+    """Airplanes.live API Client."""
 
     def __init__(
         self,
-        username: str,
-        password: str,
         session: aiohttp.ClientSession,
     ) -> None:
-        """Sample API Client."""
-        self._username = username
-        self._password = password
+        """Initialize the API Client."""
         self._session = session
 
     async def async_get_data(self) -> Any:
         """Get data from the API."""
         return await self._api_wrapper(
             method="get",
-            url="https://jsonplaceholder.typicode.com/posts/1",
-        )
-
-    async def async_set_title(self, value: str) -> Any:
-        """Get data from the API."""
-        return await self._api_wrapper(
-            method="patch",
-            url="https://jsonplaceholder.typicode.com/posts/1",
-            data={"title": value},
-            headers={"Content-type": "application/json; charset=UTF-8"},
+            url=URL_FEED_STATUS,
         )
 
     async def _api_wrapper(
@@ -81,21 +54,21 @@ class IntegrationBlueprintApiClient:
                     headers=headers,
                     json=data,
                 )
-                _verify_response_or_raise(response)
+                response.raise_for_status()
                 return await response.json()
 
         except TimeoutError as exception:
             msg = f"Timeout error fetching information - {exception}"
-            raise IntegrationBlueprintApiClientCommunicationError(
+            raise AirplanesLiveApiClientCommunicationError(
                 msg,
             ) from exception
         except (aiohttp.ClientError, socket.gaierror) as exception:
             msg = f"Error fetching information - {exception}"
-            raise IntegrationBlueprintApiClientCommunicationError(
+            raise AirplanesLiveApiClientCommunicationError(
                 msg,
             ) from exception
         except Exception as exception:  # pylint: disable=broad-except
             msg = f"Something really wrong happened! - {exception}"
-            raise IntegrationBlueprintApiClientError(
+            raise AirplanesLiveApiClientError(
                 msg,
             ) from exception

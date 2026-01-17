@@ -8,5 +8,8 @@
   "documentation": "https://github.com/bwarden/hacs-airplanes-live-feeder-status/blob/main/README.md",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/bwarden/hacs-airplanes-live-feeder-status/issues",
+  "requirements": [
+    "netifaces"
+  ],
   "version": "0.1.0"
 }
