@@ -6,6 +6,11 @@ import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 
+from .api import (
+    AirplanesLiveApiClient,
+    AirplanesLiveApiClientCommunicationError,
+    AirplanesLiveApiClientError,
+)
 from .const import DOMAIN, LOGGER
 
 
@@ -19,11 +24,6 @@ class AirplanesLiveFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         user_input: dict | None = None,
     ) -> config_entries.ConfigFlowResult:
         """Handle a flow initialized by the user."""
-        from .api import (
-            AirplanesLiveApiClientCommunicationError,
-            AirplanesLiveApiClientError,
-        )
-
         _errors = {}
         if user_input is not None:
             try:
@@ -48,8 +48,6 @@ class AirplanesLiveFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def _test_connection(self) -> None:
         """Validate connection."""
-        from .api import AirplanesLiveApiClient
-
         client = AirplanesLiveApiClient(
             session=async_create_clientsession(self.hass),
         )
