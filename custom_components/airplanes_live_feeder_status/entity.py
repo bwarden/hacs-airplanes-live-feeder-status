@@ -24,4 +24,5 @@ class AirplanesLiveEntity(CoordinatorEntity[AirplanesLiveFeederStatusCoordinator
             name=NAME,
             model=VERSION,
             manufacturer=NAME,
+            configuration_url="https://airplanes.live/myfeed/",
         )
