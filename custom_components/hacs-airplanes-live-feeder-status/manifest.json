@@ -1,0 +1,12 @@
+{
+  "domain": "airplanes_live_feeder_status",
+  "name": "airplanes.live feeder status",
+  "codeowners": [
+    "@bwarden"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/bwarden/hacs-airplanes-live-feeder-status/blob/main/README.md",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/bwarden/hacs-airplanes-live-feeder-status/issues",
+  "version": "0.1.0"
+}

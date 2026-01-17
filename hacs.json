@@ -1,5 +1,5 @@
 {
-    "name": "Integration blueprint",
-    "homeassistant": "2025.2.4",
+    "name": "airplanes.live feeder status",
+    "homeassistant": "2026.1.1",
     "hacs": "2.0.5"
 }
